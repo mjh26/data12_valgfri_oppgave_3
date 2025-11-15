@@ -1,0 +1,261 @@
+/**
+    General elements and classes
+    Lay-out that does not depend on screen size
+    Lay-out for three columns, depending on screen size
+
+    Hamburger menu, breakpoint 700px
+**/
+
+:root{
+    --lineheight: 1.5em;
+    --standardpadding: 1em;
+    --accentclr: rgba(240, 240, 240, 1);
+    --links: rgb(50, 0, 255);
+    --linksvisited: rgb(100, 50, 140);
+    --clicktext: rgb(40, 20, 120);
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/** SECTIONING ELEMENTS **/
+header {
+    display: flex;
+    background-image: url(../images/backgroundsnow.jpg);
+    background-size: cover;
+    place-items: center;
+    flex-direction: column;
+}
+
+article { /* 'Article' element triggers more paddings, line-height, etc.; use with care */
+    padding-left: var(--standardpadding);
+    padding-right: var(--standardpadding);
+}
+
+aside {
+    font-size: smaller;
+    font-weight: 200;
+    padding-left: var(--standardpadding);
+    padding-right: var(--standardpadding);
+    padding-top: var(--lineheight);
+}
+
+footer {
+    background-color: var(--accentclr);
+    display: flex;
+    justify-content: center;
+    font-size: 0.8em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+footer a {
+    color: black;
+}
+
+/** MAIN ELEMENTS **/
+h1, h2 {font-family: 'Times New Roman', Times, serif;} /** H1 in header styled in Hamburger below **/
+
+p {
+    line-height: var(--lineheight);
+    padding-top: 0;
+}
+
+article p {padding-bottom: var(--lineheight);}
+
+picture {padding: var(--standardpadding);}
+
+details {
+    background-color: var(--accentclr);
+    padding: 0.5rem;
+    margin-bottom: 0.2rem;
+}
+
+summary {
+    color: var(--clicktext);
+    font-weight: 600;
+    cursor: pointer; /* Summary is clickable, but no visual cue by default */ 
+}
+
+address {
+    font-style: normal;
+    padding-top: 1em;
+}
+
+/** UNIVERSAL CLASSES **/
+/** See also .phonehidden below **/
+.lineshift {padding-top: var(--lineheight);} /** used for extra space **/
+
+
+/** SCALING OF PAGES **/
+/** ——— Auto-sorting boxes, all widths  ——— **/
+.flexrow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.flexrow > div {
+    margin: 0.1em;
+    padding: var(--standardpadding);
+    background-color: antiquewhite;
+    width: 200px;
+    font-size: smaller;
+}
+
+/** ——— Three-column lay-out;  ——— **/
+@media (max-width: 900px) {
+    main {
+        padding-left: 1em;
+        padding-right: 1em;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .leftboxtop {
+        order: 1;
+        display: flex;
+    }
+
+    article {
+        order: 2;
+    }
+
+    .phonehidden { /* Use this class to hide elements from small screens */
+        display: none;
+    }
+}
+
+@media (min-width: 901px) {
+    main {
+        display: grid;
+        grid-template-rows: auto auto;
+    }
+
+    .flexcontainer3boxes {
+        display: flex;
+        justify-content: center;
+    }
+
+    .leftbox {
+        flex-grow: 1;
+        flex-basis: 200px;
+        padding-left: 2em;
+    }
+
+    article {
+        flex: 2 1 400px; /* Example shorthand: flex-grow flex-shrink flex-basis */
+    }
+
+    .rightbox {
+        flex-grow: 1;
+        flex-basis: 200px;
+    }
+}
+
+@media (min-width: 1250px) {
+    .flexcontainer3boxes {
+        display: flex;
+        justify-content: center;
+        padding-left: 10vw;
+        padding-right: 10vw;
+    }
+
+    .flexrow {
+        padding-left: 10vw;
+        padding-right: 10vw;
+    }
+}
+
+/** HAMBURGER MENU **/
+menu {
+    color: white;
+}
+
+#burger-toggle {display: none;}
+
+@media (min-width: 801px) {
+    menu {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        list-style-type: none;
+    }
+
+    menu li {padding-right: 4rem;}
+
+    nav {
+        background-color: rgba(0,0,0,0.4);
+        width: 100%;
+        line-height: 0.4em;
+        height: 2em;
+    }
+
+    header h1 {
+        color: white;
+        letter-spacing: 0.2em;
+        font-size: 3em;
+        line-height: calc(0.6em + 2vw);
+    }
+}
+
+@media (max-width: 800px) {
+    header {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+    }
+
+    nav {
+        grid-column: 1 / 2;
+        grid-row-start: 1;
+        display: flex;
+        height: 40px;
+    }
+
+    header h1 {
+        grid-column: 2/3;
+        margin-left: -80px;
+        color: white;
+        letter-spacing: 0.2em;
+        font-size: 1.7em;
+        line-height: calc(0.4em + 2vw);
+    }
+
+    menu {
+        list-style-type: none;
+        position: sticky;
+    }
+
+    .menu-icon {
+        display: block;
+        background-image: url(../images/menu.svg);
+        background-size: cover;
+        height: 40px;
+        width: 40px;
+        position: static;
+    }
+
+    menu li {
+        height: 0;
+        overflow: hidden;
+        margin-left: -80px;
+    }
+
+    #burger-toggle:checked ~ menu li {
+        height: 1.2em;
+        line-height: 1.2em;
+        width: auto;
+        padding-left: 0.6rem;
+        padding-right: 0.5rem;
+        padding-top: 0.2rem;
+        padding-bottom: 0.5rem;
+        background-color: rgba(0,0,0,0.8);
+    }
+
+    .hamburger-toggle-container {cursor: pointer;}
+}
